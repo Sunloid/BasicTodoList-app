@@ -24,6 +24,7 @@ const style = StyleSheet.create({
     alignItems: 'center',
     justifyContent: "space-between",
     marginBottom: 20,
+    marginEnd:20,
   },
   itemLeft: {
     flexDirection: "row",
@@ -34,13 +35,20 @@ const style = StyleSheet.create({
   squares: {
     height:24, 
     width:24,
-    backgroundColor: "#5BCF6",
+    backgroundColor: "#5BCF",
     opacity: 0.4,
     borderRadius:10,
     marginRight:10
   },
   text: {
     marginTop:4,
+  },
+  circular: {
+    width:12,
+    height:12,
+    borderRadius:20,
+    borderWidth:2,
+    borderColor:'#5BCF' 
   }
 
 });
