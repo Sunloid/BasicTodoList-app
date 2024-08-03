@@ -1,60 +1,50 @@
-import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
-import Task from "./components/Task";
-import { KeyboardAvoidingView } from "react-native";
-import Input from "./components/input";
-import Constants from "expo-constants";
 import { useState } from "react";
+import Task from "./components/Task";
 import {
   TextInput,
   TouchableOpacity,
+  KeyboardAvoidingView,
+  Platform,
+  Keyboard,
+  StyleSheet,
+  Text,
+  View,
 } from "react-native";
 
 export default function App() {
   const [task, setTask] = useState();
-  const [taskItems, setTaskItems] = useState([])
+  const [taskItems, setTaskItems] = useState([]);
   const handleAddTask = () => {
-    setTaskItems([...taskItems, task])
-    setTask(null)}
-  function Yes() {
-    if (Constants.platform.ios) {
-      return (
-        <View style={styles.writeTaskWrapper}>
-          <TextInput
-            style={styles.input}
-            placeholder={"Write it here"}
-            onChangeText={(task) => setTask(task)}
-            value={task}
-          />
-          <TouchableOpacity onPress={() => handleAddTask()}>
-            <View style={styles.addWrapper}>
-              <Text style={styles.addText}>+</Text>
-            </View>
-          </TouchableOpacity>
-        </View>
-      );
-    }
-  }
-  
+    setTaskItems([...taskItems, task]);
+    setTask(null);
+    Keyboard.dismiss();
+  };
   return (
     <View style={styles.container}>
       <View style={styles.tasksWrapper}>
         <Text style={styles.sectionTitle}>Today's Task</Text>
         <View style={styles.item}>
-          <Task text={"task1"} />
-          <Task text={"Task 2"} />
-          <Task text={"Task 3"} />
-          <Task text={"Task 4"} />
-          <Task text={"Task 5"} />
+          {taskItems.map((item, index) => {
+            return <Task key={index} text={item} />;
+          })}
         </View>
       </View>
-      <KeyboardAvoidingView style={styles.writeTaskWrapper}>
-        {
-          Yes()
-        }
-        <View>
-          <Text>HEllo world</Text>
-        </View>
+      <KeyboardAvoidingView
+        style={styles.writeTaskWrapper}
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+      >
+        <TextInput
+          style={styles.input}
+          placeholder="Write a task"
+          onChangeText={(text) => setTask(text)}
+          value={task}
+        />
+        <TouchableOpacity
+          style={styles.addWrapper}
+          onPress={() => handleAddTask()}
+        >
+          <Text style={styles.addText}>+</Text>
+        </TouchableOpacity>
       </KeyboardAvoidingView>
     </View>
   );
@@ -79,43 +69,30 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   writeTaskWrapper: {
-    position: "absolute",
-    width: "100%",
     flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
+    justifyContent: "space-evenly",
+    position: "absolute",
     bottom: 60,
-    backgroundColor:"#FF0000"
+    alignContent: "center",
+    width: "100%",
   },
   input: {
-    paddingVertical: 15,
-    width: "80%",
-    paddingHorizontal: 15,
     backgroundColor: "#FFF",
+    width: "80%",
+    paddingVertical: 15,
+    paddingHorizontal: 15,
     borderRadius: 60,
+    borderWidth: 1,
     borderColor: "#C0C0C0",
-    borderWidth: "1",
-    height: 50,
   },
   addWrapper: {
     backgroundColor: "#FFF",
     width: 60,
     height: 50,
     borderRadius: 60,
-    borderColor: "#C0C0C0",
     borderWidth: 1,
+    borderColor: "#C0C0C0",
     justifyContent: "center",
-    alignContent: "items",
-  },
-  addText: {
-    backgroundColor: "#FF0000",
-  },
-  writeTaskWrapper: {
-    position: "absolute",
-    width: "100%",
-    flexDirection: "row",
-    justifyContent: "space-around",
     alignItems: "center",
-    zIndex: 1,
   },
-})
+});
