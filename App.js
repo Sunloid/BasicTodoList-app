@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Task from "./components/Task";
+import Status from "./components/Status";
 import {
   TextInput,
   TouchableOpacity,
@@ -10,22 +11,36 @@ import {
   Text,
   View,
 } from "react-native";
+import { SafeAreaView } from "react-native-web";
 
 export default function App() {
   const [task, setTask] = useState();
   const [taskItems, setTaskItems] = useState([]);
+
   const handleAddTask = () => {
     setTaskItems([...taskItems, task]);
     setTask(null);
     Keyboard.dismiss();
   };
+
+  const completeTask = (index) => {
+    let itemsCopy = [...taskItems];
+    itemsCopy.splice(index, 1);
+    setTaskItems(itemsCopy);
+  };
+
   return (
     <View style={styles.container}>
+      {/* <Status/> */}
       <View style={styles.tasksWrapper}>
         <Text style={styles.sectionTitle}>Today's Task</Text>
         <View style={styles.item}>
           {taskItems.map((item, index) => {
-            return <Task key={index} text={item} />;
+            return (
+              <TouchableOpacity onPress={() => completeTask(index)} key={index}>
+                <Task  text={item} />
+              </TouchableOpacity>
+              )
           })}
         </View>
       </View>
