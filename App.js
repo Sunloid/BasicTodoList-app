@@ -1,6 +1,5 @@
 import { useState } from "react";
 import Task from "./components/Task";
-import Status from "./components/Status";
 import {
   TextInput,
   TouchableOpacity,
@@ -10,8 +9,8 @@ import {
   StyleSheet,
   Text,
   View,
+  StatusBar,
 } from "react-native";
-import { SafeAreaView } from "react-native-web";
 
 export default function App() {
   const [task, setTask] = useState();
@@ -31,7 +30,7 @@ export default function App() {
 
   return (
     <View style={styles.container}>
-      {/* <Status/> */}
+      <StatusBar backgroundColor="#C0C0C0"/>
       <View style={styles.tasksWrapper}>
         <Text style={styles.sectionTitle}>Today's Task</Text>
         <View style={styles.item}>

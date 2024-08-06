@@ -3,13 +3,13 @@ import { View, Text, StyleSheet } from "react-native";
 
 const Task = (props) => {
   return (
-    <form style={style.item}>
+    <View style={style.item}>
       <View style={style.itemLeft}>
         <View style={style.squares}></View>
         <Text style={style.text}>{props.text}</Text>
       </View>
       <View style={style.circular}></View>
-    </form>
+    </View>
   );
 };
 
